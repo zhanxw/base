@@ -1,10 +1,17 @@
 CPPFLAGS=-g
 GINCLUDE=/home/zhanxw/karmaColor/csg/libcsg/
 GLIB=/home/zhanxw/karmaColor/csg/libcsg/libcsg.a
-all:main read1
+BASE= String File
+BASEHDR = $(BASE:=.h)
+BASESRC = $(BASE:=.cpp) main.cpp
+BASEOBJ = $(BASESRC:.cpp=.o)
 
-main:main.cpp String.h 
-	g++ $(CPPFLAGS) -o main main.cpp \
+all:main read1
+.cpp.o:
+	g++ $(CPPFLAGS) -c $*.cpp
+
+main:main.cpp $(BASEOBJ)
+	g++ $(CPPFLAGS) -o main $(BASEOBJ) \
 	-I./zlib -L./zlib -lz \
 	-I./bzip2 -L./bzip2 -lbz2
 read1: read1.o
